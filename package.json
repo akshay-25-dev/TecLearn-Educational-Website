@@ -1,0 +1,25 @@
+{
+  "name": "teclearn-edtech-platform",
+  "version": "1.0.0",
+  "description": "TecLearn - Full Stack EdTech Learning Management System Platform",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "server": "cd server && npm start",
+    "server:dev": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "client:build": "cd client && npm run build",
+    "build": "cd client && npm run build"
+  },
+  "keywords": [
+    "edtech",
+    "react",
+    "nodejs",
+    "express",
+    "mongodb",
+    "razorpay",
+    "cloudinary"
+  ],
+  "author": "Akshay Singh",
+  "license": "ISC"
+}
