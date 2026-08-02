@@ -15,7 +15,6 @@ server/.env
 "card details"
 card details/
 *.docx
-*.png
 Screenshot*
 
 # Production Build Output
