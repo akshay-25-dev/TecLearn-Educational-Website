@@ -76,13 +76,9 @@ app.get("/", (req, res) => {
 	});
 });
 
-// Listening to the server (only when running directly, not in Vercel serverless functions)
-if (!process.env.VERCEL) {
-	app.listen(PORT, () => {
-		console.log(`App is listening at ${PORT}`);
-	});
-}
-
-module.exports = app;
+// Listening to the server
+app.listen(PORT, () => {
+	console.log(`App is listening at ${PORT}`);
+});
 
 
