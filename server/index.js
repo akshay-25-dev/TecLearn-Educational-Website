@@ -28,20 +28,24 @@ app.use(cookieParser());
 // Enable CORS for frontend applications
 const allowedOrigins = process.env.ALLOWED_ORIGINS
 	? process.env.ALLOWED_ORIGINS.split(",")
-	: [
-			"http://localhost:3000",
-			"http://localhost:5173",
-			"http://localhost:5174",
-			"http://localhost:5175",
-			"http://127.0.0.1:3000",
-			"http://127.0.0.1:5173",
-			"http://127.0.0.1:5174",
-			"http://127.0.0.1:5175",
-	  ];
+	: "*";
 
 app.use(
 	cors({
-		origin: allowedOrigins,
+		origin: (origin, callback) => {
+			if (
+				!origin ||
+				allowedOrigins === "*" ||
+				allowedOrigins.includes(origin) ||
+				origin.endsWith(".netlify.app") ||
+				origin.endsWith(".vercel.app") ||
+				/^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin)
+			) {
+				callback(null, true);
+			} else {
+				callback(null, true);
+			}
+		},
 		credentials: true,
 	})
 );
@@ -49,7 +53,7 @@ app.use(
 app.use(
 	fileUpload({
 		useTempFiles: true,
-		tempFileDir: os.tmpdir(), // cross-platform: works on Windows & Linux
+		tempFileDir: "/tmp/",
 	})
 );
 
@@ -72,10 +76,12 @@ app.get("/", (req, res) => {
 	});
 });
 
-// Listening to the server
-app.listen(PORT, () => {
-	console.log(`App is listening at ${PORT}`);
-});
+// Listening to the server (only when running directly, not in Vercel serverless functions)
+if (!process.env.VERCEL) {
+	app.listen(PORT, () => {
+		console.log(`App is listening at ${PORT}`);
+	});
+}
 
 module.exports = app;
 
